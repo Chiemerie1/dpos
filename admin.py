@@ -7,7 +7,7 @@ from tkinter import messagebox
 
 root = Tk()
 
-#root.geometry("900x600")
+root.geometry("900x600")
 root.title("POS Admin")
 root.configure(background="gray29")
 
@@ -108,8 +108,8 @@ title_label.grid(row=0, column=0, columnspan=2, pady=10)
 frame1 = LabelFrame(root, bg="grey", text="Users")
 frame2 = LabelFrame(root, bg="grey", text="Products")
 
-frame1.grid(row=1, column=0, padx=10, pady=5)
-frame2.grid(row=1, column=1, padx=10, pady=5)
+frame1.grid(row=1, column=0, padx=10, pady=5, ipadx=90)
+frame2.grid(row=1, column=1, padx=10, pady=5, ipadx=90)
 
 #users
 fn_label = Label(frame1, text="First name", padx=10, pady=5, bg="grey")
@@ -167,13 +167,13 @@ pclear_btn = Button(frame2, text="clear", border=2, width=10, command=clear_pent
 pclear_btn.grid(row=4, column=2, padx=10, pady=5)
 
 #display data
-user_info_frame = LabelFrame(root, text="personel information", bg="sea green")
-user_info_frame.grid(row=2, column=0, columnspan=2, padx=5, pady=5, ipadx=200)
+user_info_frame = LabelFrame(root, text="personel information", bg="sea green", padx=10)
+user_info_frame.grid(row=2, column=0, padx=5, pady=5, ipadx=90)
 display_users_info = Label(user_info_frame, text="here", bg="sea green", fg="white")
 display_users_info.pack(padx=10, pady=10)
 
-product_info_frame = LabelFrame(root, text="product information", bg="sea green")
-product_info_frame.grid(row=3, column=0, columnspan=2, padx=5, pady=5, ipadx=200)
+product_info_frame = LabelFrame(root, text="product information", bg="sea green", padx=10)
+product_info_frame.grid(row=2, column=1, padx=5, pady=5, ipadx=90)
 show_product_info = Label(product_info_frame, text="here", bg="sea green", fg="white")
 show_product_info.pack(padx=10, pady=10)
 
@@ -185,11 +185,6 @@ def user_info_btn():
     for user in users_info:
         display_users_info.config(text=user)
 
-        
-
-display_user_btn = Button(user_info_frame, text="show info", command=user_info_btn)
-display_user_btn.pack()
-
 # product query
 product_query = "SELECT * FROM products"
 
@@ -198,7 +193,15 @@ def product_info_button():
     product_info = cursor.fetchall()
     for product in product_info:
         show_product_info.config(text=product)
-product_info_button()
+
+#display buttons
+display_user_btn = Button(user_info_frame, text="show info", command=user_info_btn)
+display_user_btn.pack()
+
+product_user_btn = Button(product_info_frame, text="show info", command=product_info_button)
+product_user_btn.pack()
+
+
 
 
 
