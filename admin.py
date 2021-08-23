@@ -169,33 +169,37 @@ pclear_btn.grid(row=4, column=2, padx=10, pady=5)
 #display data
 user_info_frame = LabelFrame(root, text="personel information", bg="sea green")
 user_info_frame.grid(row=2, column=0, columnspan=2, padx=5, pady=5, ipadx=200)
+display_users_info = Label(user_info_frame, text="here", bg="sea green", fg="white")
+display_users_info.pack(padx=10, pady=10)
 
 product_info_frame = LabelFrame(root, text="product information", bg="sea green")
 product_info_frame.grid(row=3, column=0, columnspan=2, padx=5, pady=5, ipadx=200)
-users_info = Label(product_info_frame, text="here", bg="sea green", fg="white")
-users_info.pack(padx=10, pady=10)
+show_product_info = Label(product_info_frame, text="here", bg="sea green", fg="white")
+show_product_info.pack(padx=10, pady=10)
+
 
 #displaying data
 def user_info_btn():
     cursor.execute("SELECT * FROM users")
     users_info = cursor.fetchall()
     for user in users_info:
-        users_info = Label(user_info_frame, text=users_info[-1], bg="sea green", fg="white")
-        users_info.pack(padx=10, pady=10)
+        display_users_info.config(text=user)
 
-show_user_btn = Button(user_info_frame, text="show info", command=user_info_btn)
-show_user_btn.pack()
+        
 
-#Checking database
-# cursor.execute("SELECT * FROM users")
-# response = cursor.fetchall()
-# for x in response:
-#     print(x[2])
+display_user_btn = Button(user_info_frame, text="show info", command=user_info_btn)
+display_user_btn.pack()
 
-# cursor.execute("SELECT * FROM products")
-# response = cursor.fetchall()
-# for x in response:
-#     print(x)
+# product query
+product_query = "SELECT * FROM products"
+
+def product_info_button():
+    cursor.execute(product_query)
+    product_info = cursor.fetchall()
+    for product in product_info:
+        show_product_info.config(text=product)
+product_info_button()
+
 
 
 
