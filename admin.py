@@ -1,15 +1,17 @@
 from tkinter import *
 import mysql.connector
 from mysql.connector.errors import custom_error_exception
+from tkinter import messagebox
 
 
 
 root = Tk()
 
-# root.geometry("900x600")
+#root.geometry("900x600")
 root.title("POS Admin")
 root.configure(background="gray29")
 
+#database
 db = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -46,8 +48,15 @@ for x in cursor:
 # for x in cursor.description:
 #     print (x)
 
+
+#messages
+def msg_info():
+    messagebox.showinfo("success", "submitted successfully")
+def msg_error():
+    messagebox.showerror("error", "Name not entered")
 #functions
 #clear fields
+
 def clear_uentry():
     fn_entry.delete(0, END)
     ln_entry.delete(0, END)
@@ -68,9 +77,13 @@ def u_submit():
                 un_entry.get(),
                 tt_entry.get()
             )
-    cursor.execute(sql_code, values)
-    db.commit()
-    clear_uentry()
+    if len(fn_entry.get()) != 0:
+        cursor.execute(sql_code, values)
+        db.commit()
+        clear_uentry()
+        msg_info()
+    else:
+        msg_error()
 
 def p_submit():
     sql_code = "INSERT INTO products (name, category, price) VALUES (%s, %s, %s)"
@@ -78,15 +91,19 @@ def p_submit():
                 #pnum_entry.get(),
                 pcat_entry.get(),
                 price_entry.get()
-            )
-    cursor.execute(sql_code, values)
-    db.commit()
-    clear_pentry()
+                )
+    if len(pn_entry.get()) != 0:
+        cursor.execute(sql_code, values)
+        db.commit()
+        clear_pentry()
+        msg_info()
+    else:
+        msg_error()
 
 
 
 title_label = Label(root, text="Admin Console", fg="white", bg="gray29")
-title_label.grid(row=0, pady=10)
+title_label.grid(row=0, column=0, columnspan=2, pady=10)
 #frames
 frame1 = LabelFrame(root, bg="grey", text="Users")
 frame2 = LabelFrame(root, bg="grey", text="Products")
@@ -94,6 +111,7 @@ frame2 = LabelFrame(root, bg="grey", text="Products")
 frame1.grid(row=1, column=0, padx=10, pady=5)
 frame2.grid(row=1, column=1, padx=10, pady=5)
 
+#users
 fn_label = Label(frame1, text="First name", padx=10, pady=5, bg="grey")
 ln_label = Label(frame1, text="Last name", padx=10, pady=5, bg="grey")
 un_label = Label(frame1, text="Username", padx=10, pady=5, bg="grey")
@@ -114,12 +132,7 @@ ln_entry.grid(row=1, column=2, padx= 10)
 un_entry.grid(row=2, column=2, padx= 10)
 tt_entry.grid(row=3, column=2, padx= 10)
 
-user_submit = Button(frame1, text="Submit", command=u_submit, border=2, width=10, fg="white", bg="medium sea green")
-user_submit.grid(row=4, column=1, padx=10, pady=5)
-
-uclear_btn = Button(frame1, text="clear", border=2, command=clear_uentry, width=10,  bg="navajowhite4", fg="white")
-uclear_btn.grid(row=4, column=2, padx=10, pady=5)
-
+#products
 pn_label = Label(frame2, text="Name", padx=10, pady=5, bg="grey")
 pnum_label = Label(frame2, text="Number", padx=10, pady=5, bg="grey")
 pcat_label = Label(frame2, text="Category", padx=10, pady=5, bg="grey")
@@ -140,11 +153,38 @@ pnum_entry.grid(row=1, column=2, padx= 10)
 pcat_entry.grid(row=2, column=2, padx= 10)
 price_entry.grid(row=3, column=2, padx= 10)
 
+#buttons
+user_submit = Button(frame1, text="Submit", command=u_submit, border=2, width=10, fg="white", bg="medium sea green")
+user_submit.grid(row=4, column=1, padx=10, pady=5)
+
+uclear_btn = Button(frame1, text="clear", border=2, command=clear_uentry, width=10,  bg="navajowhite4", fg="white")
+uclear_btn.grid(row=4, column=2, padx=10, pady=5)
+
 product_submit = Button(frame2, text="Submit", border=2, width=10, command=p_submit, fg="white", bg="medium sea green")
 product_submit.grid(row=4, column=1, padx=10, pady=5)
+
 pclear_btn = Button(frame2, text="clear", border=2, width=10, command=clear_pentry, bg="navajowhite4", fg="white")
 pclear_btn.grid(row=4, column=2, padx=10, pady=5)
 
+#display data
+user_info_frame = LabelFrame(root, text="personel information", bg="sea green")
+user_info_frame.grid(row=2, column=0, columnspan=2, padx=5, pady=5, ipadx=200)
+
+product_info_frame = LabelFrame(root, text="product information", bg="sea green")
+product_info_frame.grid(row=3, column=0, columnspan=2, padx=5, pady=5, ipadx=200)
+users_info = Label(product_info_frame, text="here", bg="sea green", fg="white")
+users_info.pack(padx=10, pady=10)
+
+#displaying data
+def user_info_btn():
+    cursor.execute("SELECT * FROM users")
+    users_info = cursor.fetchall()
+    for user in users_info:
+        users_info = Label(user_info_frame, text=users_info[-1], bg="sea green", fg="white")
+        users_info.pack(padx=10, pady=10)
+
+show_user_btn = Button(user_info_frame, text="show info", command=user_info_btn)
+show_user_btn.pack()
 
 #Checking database
 # cursor.execute("SELECT * FROM users")
