@@ -24,22 +24,22 @@ db = mysql.connector.connect(
 cursor = db.cursor()
 #cursor.execute("CREATE DATABASE dpos")
 
-# cursor.execute("CREATE TABLE customers (user_id INT AUTO_INCREMENT PRIMARY KEY, \
-#     first_name VARCHAR(50), \
-#     last_name VARCHAR(50),  \
-#     username VARCHAR(15), \
-#     designation VARCHAR(15))")
+cursor.execute("CREATE TABLE  IF NOT EXISTS customers (user_id INT AUTO_INCREMENT PRIMARY KEY, \
+    first_name VARCHAR(50), \
+    last_name VARCHAR(50),  \
+    username VARCHAR(15), \
+    designation VARCHAR(15))")
 
-# cursor.execute("CREATE TABLE products (product_id INT AUTO_INCREMENT PRIMARY KEY, \
-#     name VARCHAR(100), \
-#     category VARCHAR(100), \
-#     price INT(10))")
+cursor.execute("CREATE TABLE  IF NOT EXISTS products (product_id INT AUTO_INCREMENT PRIMARY KEY, \
+    name VARCHAR(100), \
+    category VARCHAR(100), \
+    price INT(10))")
 
 # cursor.execute("ALTER TABLE customers RENAME to users")
 
-cursor.execute("SHOW TABLES")
-for x in cursor:
-    print(x)
+# cursor.execute("SHOW TABLES")
+# for x in cursor:
+#     print(x)
 
 # cursor.execute("SELECT * FROM users")
 # for x in cursor.description:
