@@ -5,6 +5,7 @@ from tkinter import messagebox
 
 
 
+
 root = Tk()
 
 root.geometry("900x600")
@@ -174,7 +175,7 @@ display_users_info.pack(padx=10, pady=10)
 
 product_info_frame = LabelFrame(root, text="product information", bg="sea green", padx=10)
 product_info_frame.grid(row=2, column=1, padx=5, pady=5, ipadx=90)
-show_product_info = Label(product_info_frame, text="here", bg="sea green", fg="white")
+show_product_info = Label(product_info_frame, text="here", bg="sea green", fg="white", font="Times")
 show_product_info.pack(padx=10, pady=10)
 
 
