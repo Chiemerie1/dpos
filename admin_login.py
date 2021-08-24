@@ -41,7 +41,7 @@ def login():
         if username == admin[1] and pwd == admin[2]:
             # notify.config(text="It is what it is")
             root.destroy()
-            import admin
+            import admin_console_2
         else:
             notify.config(text="wrong cred")
 
