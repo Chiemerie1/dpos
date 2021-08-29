@@ -7,6 +7,17 @@ import mysql.connector
 root = Tk()
 root.geometry("900x600")
 root.title("Admin")
+root.configure(background="white")
+
+
+
+##############styling#################
+style = ttk.Style()
+style.theme_use("default")
+style.configure("TNotebook", background="white",
+                foreground="black")
+style.configure('TNotebook.Tab', background="dodgerblue2")
+style.map("TNotebook", background= [("selected", "dodgerblue2")])
 
 
 
@@ -68,31 +79,31 @@ def u_submit():
 
 
 admin_title = Label(root, text="Admin Console", padx=10, pady=10,
-            font=("Times", 14))
+            font=("Times", 14), bg="white")
 admin_title.pack()
 
 admin_tab = ttk.Notebook(root, width=800, height=400)
 admin_tab.pack()
 
-users_tab = ttk.Frame(admin_tab, width=800, height=500)
+users_tab = Frame(admin_tab, width=800, height=500, bg="white")
 #users_tab["padding"] = 10
-users_tab.pack(fill="both", expand=True)
+users_tab.pack(fill=BOTH, expand=True)
 
-products_tab = ttk.Frame(admin_tab, width=800, height=500)
+products_tab = Frame(admin_tab, width=800, height=500, bg="white")
 #products_tab["padding"] = 10
-products_tab.pack(fill="both", expand=True)
+products_tab.pack(fill=BOTH, expand=True)
 
 admin_tab.add(users_tab, text="Users")
 admin_tab.add(products_tab, text="Products")
 
-frame1 = LabelFrame(users_tab, text="Users")
+frame1 = LabelFrame(users_tab, text="Users", bg="white")
 frame1.grid(row=1, column=0, padx=10, pady=5, ipadx=50)
 
 #users
-fn_label = Label(frame1, text="First name", padx=10, pady=5)
-ln_label = Label(frame1, text="Last name", padx=10, pady=5)
-un_label = Label(frame1, text="Username", padx=10, pady=5)
-tt_label = Label(frame1, text="Title", padx=10, pady=5)
+fn_label = Label(frame1, text="First name", padx=10, pady=5, bg="white")
+ln_label = Label(frame1, text="Last name", padx=10, pady=5, bg="white")
+un_label = Label(frame1, text="Username", padx=10, pady=5, bg="white")
+tt_label = Label(frame1, text="Title", padx=10, pady=5, bg="white")
 
 fn_label.grid(row=0, column=1, padx=10, pady=5)
 ln_label.grid(row=1, column=1, padx=10, pady=5)
@@ -109,16 +120,18 @@ ln_entry.grid(row=1, column=2, padx= 10)
 un_entry.grid(row=2, column=2, padx= 10)
 tt_entry.grid(row=3, column=2, padx= 10)
 
-user_submit = Button(frame1, text="Submit", command=u_submit, border=2, width=10, fg="white", bg="medium sea green")
+user_submit = Button(frame1, text="Submit", command=u_submit, border=2, width=10,
+                        fg="white", bg="dodgerblue2")
 user_submit.grid(row=4, column=1, padx=10, pady=5)
 
-uclear_btn = Button(frame1, text="clear", border=2, command=clear_uentry, width=10,  bg="firebrick1", fg="white")
+uclear_btn = Button(frame1, text="clear", border=2, command=clear_uentry, width=10,
+                    bg="gray19", fg="white")
 uclear_btn.grid(row=4, column=2, padx=10, pady=5)
 
 user_info_frame = LabelFrame(users_tab, text="personel information",
-                        bg="sea green", padx=10)
+                        bg="dodgerblue2", padx=10)
 user_info_frame.grid(row=1, column=1, padx=5, pady=5, ipadx=50)
-display_users_info = Label(user_info_frame, text="here", font="Times", bg="sea green", fg="white")
+display_users_info = Label(user_info_frame, text="here", font="Times", bg="dodgerblue2", fg="white")
 display_users_info.pack(padx=10, pady=10)
 
 
@@ -147,13 +160,13 @@ def p_submit():
 
 
 
-frame2 = LabelFrame(products_tab, text="Products")
+frame2 = LabelFrame(products_tab, text="Products", bg="white")
 frame2.grid(row=1, column=0, padx=10, pady=5, ipadx=50)
 
-pn_label = Label(frame2, text="Name", padx=10, pady=5)
-pnum_label = Label(frame2, text="Number", padx=10, pady=5)
-pcat_label = Label(frame2, text="Category", padx=10, pady=5)
-price_label = Label(frame2, text="Price", padx=10, pady=5)
+pn_label = Label(frame2, text="Name", padx=10, pady=5, bg="white")
+pnum_label = Label(frame2, text="Number", padx=10, pady=5, bg="white")
+pcat_label = Label(frame2, text="Category", padx=10, pady=5, bg="white")
+price_label = Label(frame2, text="Price", padx=10, pady=5, bg="white")
 
 pn_label.grid(row=0, column=1, padx=10, pady=5, sticky=W)
 pnum_label.grid(row=1, column=1, padx=10, pady=5, sticky=W)
@@ -170,13 +183,13 @@ pnum_entry.grid(row=1, column=2, padx= 10)
 pcat_entry.grid(row=2, column=2, padx= 10)
 price_entry.grid(row=3, column=2, padx= 10)
 
-product_submit = Button(frame2, text="Submit", border=2, width=10, command=p_submit, fg="white", bg="medium sea green")
+product_submit = Button(frame2, text="Submit", border=2, width=10, command=p_submit, fg="white", bg="dodgerblue2")
 product_submit.grid(row=4, column=1, padx=10, pady=5)
 
-pclear_btn = Button(frame2, text="clear", border=2, width=10, command=clear_pentry, bg="firebrick1", fg="white")
+pclear_btn = Button(frame2, text="clear", border=2, width=10, command=clear_pentry, bg="gray19", fg="white")
 pclear_btn.grid(row=4, column=2, padx=10, pady=5)
 
-product_info_frame = LabelFrame(products_tab, text="product information", padx=10)
+product_info_frame = LabelFrame(products_tab, text="product information", padx=10, bg="white")
 product_info_frame.grid(row=1, column=1, padx=10, pady=5, ipadx=50)
 # show_product_info = Label(product_info_frame, text="here", bg="sea green", fg="white", font="Times")
 # show_product_info.pack(padx=10, pady=10)
@@ -206,11 +219,11 @@ def product_info_button():
 
 #display buttons
 display_user_btn = Button(root, text="show users", width=15,
-                        command=user_info_btn, bg="firebrick1", fg="white")
+                        command=user_info_btn, bg="dodgerblue2", fg="white")
 display_user_btn.pack(pady=5)
 
 product_user_btn = Button(root, text="show product", width=15,
-                        command=product_info_button, bg="firebrick1", fg="white")
+                        command=product_info_button, bg="dodgerblue2", fg="white")
 product_user_btn.pack(pady=5)
 
 

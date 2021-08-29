@@ -8,7 +8,7 @@ root = Tk()
 
 root.geometry("900x600")
 root.title("Admin login")
-#root.configure(background="gray29")
+root.configure(background="white")
 
 
 #database
@@ -50,16 +50,17 @@ def login():
 
 
 
-page_title = Label(root, text="Admin Login", font=("Times", 20))
+page_title = Label(root, text="Admin Login", font=("Times", 20), bg="white")
 page_title.pack(ipadx=10, ipady=10)
 
 logo_img = Image.open("images/pos_logo.png")
 resized = logo_img.resize((200, 200), Image.ANTIALIAS)
 logo = ImageTk.PhotoImage(resized)
-logo_label = Label(root, image=logo)
+logo_label = Label(root, image=logo, bg="white")
 logo_label.pack(padx=10, pady=10)
 
-login_frame = LabelFrame(root, text="Login", padx=10, pady=10, font="Times")
+login_frame = LabelFrame(root, text="Login", padx=10, pady=10, font="Times",
+                            bg="white")
 login_frame.pack()
 
 name_txt = Entry(login_frame, bg="gray17", fg="white", font="Times")
@@ -70,10 +71,11 @@ pwd_txt = Entry(login_frame, bg="gray17", fg="white", font="Times")
 pwd_txt.pack(padx=10, pady=10)
 pwd_txt.insert(0, "password")
 
-login_btn = Button(login_frame, text="login", width=15, command=login, fg="white", bg="medium sea green")
+login_btn = Button(login_frame, text="login", width=15, command=login, fg="white",
+                    bg="dodgerblue2")
 login_btn.pack(padx=10, pady=10)
 
-notify = Label(root, text="", font="Times", fg="red")
+notify = Label(root, text="", font="Times", fg="red", bg="white")
 notify.pack(padx=10, pady=10)
 
 
