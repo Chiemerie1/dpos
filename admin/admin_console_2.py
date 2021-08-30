@@ -60,14 +60,16 @@ def clear_uentry():
     ln_entry.delete(0, END)
     un_entry.delete(0, END)
     tt_entry.delete(0, END)
+    pwd_entry.delete(0, END)
 
 #submit to database
 def u_submit():
-    sql_code = "INSERT INTO users (first_name, last_name, username, designation) VALUES (%s, %s, %s, %s )"
+    sql_code = "INSERT INTO users (first_name, last_name, username, designation, password) VALUES (%s, %s, %s, %s, %s )"
     values = (fn_entry.get(),
                 ln_entry.get(),
                 un_entry.get(),
-                tt_entry.get()
+                tt_entry.get(),
+                pwd_entry.get()
             )
     if len(fn_entry.get()) != 0:
         cursor.execute(sql_code, values)
@@ -104,35 +106,40 @@ fn_label = Label(frame1, text="First name", padx=10, pady=5, bg="white")
 ln_label = Label(frame1, text="Last name", padx=10, pady=5, bg="white")
 un_label = Label(frame1, text="Username", padx=10, pady=5, bg="white")
 tt_label = Label(frame1, text="Title", padx=10, pady=5, bg="white")
+pwd_label = Label(frame1, text="Password", padx=10, pady=5, bg="white")
 
 fn_label.grid(row=0, column=1, padx=10, pady=5)
 ln_label.grid(row=1, column=1, padx=10, pady=5)
 un_label.grid(row=2, column=1, padx=10, pady=5)
 tt_label.grid(row=3, column=1, padx=10, pady=5, sticky=W)
+pwd_label.grid(row=4, column=1, padx=10, pady=5, sticky=W)
 
 fn_entry = Entry(frame1, borderwidth=2, bg="gray30", fg="white")
 ln_entry = Entry(frame1, borderwidth=2, bg="gray30", fg="white")
 un_entry = Entry(frame1, borderwidth=2, bg="gray30", fg="white")
 tt_entry = Entry(frame1, borderwidth=2, bg="gray30", fg="white")
+pwd_entry = Entry(frame1, borderwidth=2, bg="gray30", fg="white")
 
 fn_entry.grid(row=0, column=2, padx= 10)
 ln_entry.grid(row=1, column=2, padx= 10)
 un_entry.grid(row=2, column=2, padx= 10)
 tt_entry.grid(row=3, column=2, padx= 10)
+pwd_entry.grid(row=4, column=2, padx= 10)
 
 user_submit = Button(frame1, text="Submit", command=u_submit, border=2, width=10,
                         fg="white", bg="dodgerblue2")
-user_submit.grid(row=4, column=1, padx=10, pady=5)
+user_submit.grid(row=5, column=1, padx=10, pady=5)
 
 uclear_btn = Button(frame1, text="clear", border=2, command=clear_uentry, width=10,
                     bg="gray19", fg="white")
-uclear_btn.grid(row=4, column=2, padx=10, pady=5)
+uclear_btn.grid(row=5, column=2, padx=10, pady=5)
 
 user_info_frame = LabelFrame(users_tab, text="personel information",
-                        bg="dodgerblue2", padx=10)
+                        bg="white", padx=10)
 user_info_frame.grid(row=1, column=1, padx=5, pady=5, ipadx=50)
-display_users_info = Label(user_info_frame, text="here", font="Times", bg="dodgerblue2", fg="white")
-display_users_info.pack(padx=10, pady=10)
+user_list = Listbox(user_info_frame, bg="gray9", font="Times", fg="White", width=30,
+                    highlightcolor="gray30")
+user_list.pack(pady=5, padx=10)
 
 
 ################ product ##################
@@ -205,7 +212,7 @@ def user_info_btn():
     cursor.execute("SELECT * FROM users")
     users_info = cursor.fetchall()
     for user in users_info:
-        display_users_info.config(text=user)
+        user_list.insert(END, f"Name:  {user[1]}. Role:  {user[4]}")
 
 # product query
 product_query = "SELECT * FROM products"
