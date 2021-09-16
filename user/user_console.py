@@ -38,26 +38,19 @@ frame2.grid(row=1, column=1)
 frame3.grid(row=1, column=2)
 frame4.grid(row=1, column=3)
 
-categories = [
-                "computer",
-                "Clothing",
-                "Food",
-                "Shoes",
-                "Sports",
-                "phones",
-                "Drinks",
-                "Toiletries"
-            ]
-
 category_list = Listbox(category_frame, width=30)
 category_list.grid(row=0, column=0, padx=5, pady=5)
-for item in categories:
-    category_list.insert(END, item)
 
-
-
-
-
+query = "SELECT category FROM products"
+user_cursor.execute(query)
+category = user_cursor.fetchall()
+_list = []
+for x in category:
+    _list.append(x)
+_list = set(_list)
+print(_list)
+for x in _list:
+    category_list.insert(END, x)
 
 
 
