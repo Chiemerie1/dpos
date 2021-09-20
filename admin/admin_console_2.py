@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 import mysql.connector
+from datetime import datetime
 
 
 root = Tk()
@@ -81,17 +82,18 @@ def u_submit():
 
 
 admin_title = Label(root, text="Admin Console", padx=10, pady=10,
-            font=("Times", 14), bg="white")
-admin_title.pack()
+            font=("Sans", 14), bg="white")
 
-admin_tab = ttk.Notebook(root, width=800, height=400)
-admin_tab.pack()
+admin_title.grid(row=0, column=0, columnspan=4)
 
-users_tab = Frame(admin_tab, width=800, height=500, bg="white")
+admin_tab = ttk.Notebook(root, width=800, height=400, padding=(20,0,0,0))
+admin_tab.grid(row=1, column=0, columnspan=4)
+
+users_tab = Frame(admin_tab, width=900, height=600, bg="white")
 #users_tab["padding"] = 10
 users_tab.pack(fill=BOTH, expand=True)
 
-products_tab = Frame(admin_tab, width=800, height=500, bg="white")
+products_tab = Frame(admin_tab, width=900, height=600, bg="white")
 #products_tab["padding"] = 10
 products_tab.pack(fill=BOTH, expand=True)
 
@@ -140,6 +142,41 @@ user_info_frame.grid(row=1, column=1, padx=5, pady=5, ipadx=50)
 user_list = Listbox(user_info_frame, bg="gray9", font="Times", fg="White", width=30,
                     highlightcolor="gray30")
 user_list.pack(pady=5, padx=10)
+
+########### delete user ############
+del_user_entry = Entry(users_tab, borderwidth=2, bg="gray30", fg="white")
+del_user_entry.grid(row=2, column=0, pady=10)
+text='enter name to delete'
+del_user_entry.insert(0, text)
+
+del_user_notification = Label(users_tab, borderwidth=2, text="", bg="white", fg="gray30")
+del_user_notification.grid(row=3, column=0, pady=10)
+
+def del_user():
+    del_query = "DELETE FROM users WHERE first_name = %s"
+    first_name = (del_user_entry.get(),)
+    cursor.execute(del_query, first_name)
+    db.commit()
+    del_user_entry.delete(0, END)
+    del_user_entry.insert(0, text)
+    del_user_notification.config(text="User Deleted")
+
+########### delete product ############
+del_prod_entry = Entry(products_tab, borderwidth=2, bg="gray30", fg="white")
+del_prod_entry.grid(row=2, column=0, pady=10)
+del_prod_entry.insert(0, "enter product to delete")
+
+del_prod_notification = Label(products_tab, borderwidth=2, text="", bg="white", fg="gray30")
+del_prod_notification.grid(row=3, column=0, pady=10)
+
+def del_product():
+    del_query = "DELETE FROM products WHERE name = %s"
+    name = (del_prod_entry.get(),)
+    cursor.execute(del_query, name)
+    db.commit()
+    del_prod_entry.delete(0, END)
+    del_prod_entry.insert(0, "enter product to delete")
+    del_prod_notification.config(text="Product Deleted")
 
 
 ################ product ##################
@@ -225,13 +262,17 @@ def product_info_button():
         #show_product_info.config(text=product)
 
 #display buttons
-display_user_btn = Button(root, text="show users", width=15,
-                        command=user_info_btn, bg="dodgerblue2", fg="white")
-display_user_btn.pack(pady=5)
+display_user_btn = Button(root, text="show users", command=user_info_btn,
+                            bg="dodgerblue2", fg="white")
+display_user_btn.grid(row=2, column=0, pady=5)
 
-product_user_btn = Button(root, text="show product", width=15,
-                        command=product_info_button, bg="dodgerblue2", fg="white")
-product_user_btn.pack(pady=5)
+product_user_btn = Button(root, text="show product", command=product_info_button,
+                            bg="dodgerblue2", fg="white")
+product_user_btn.grid(row=2, column=1, pady=5)
+remove_user_btn = Button(root, text="Remove User", bg="dodgerblue2", command=del_user, fg="white")
+remove_user_btn.grid(row=2, column=2)
+remove_user_btn = Button(root, text="Remove product", command=del_product, bg="dodgerblue2", fg="white")
+remove_user_btn.grid(row=2, column=3)
 
 
 
