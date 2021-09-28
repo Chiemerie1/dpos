@@ -83,11 +83,10 @@ def u_submit():
 
 admin_title = Label(root, text="Admin Console", padx=10, pady=10,
             font=("Sans", 14), bg="white")
-
-admin_title.grid(row=0, column=0, columnspan=4)
+admin_title.grid(row=0, column=0, columnspan=2)
 
 admin_tab = ttk.Notebook(root, width=800, height=400, padding=(20,0,0,0))
-admin_tab.grid(row=1, column=0, columnspan=4)
+admin_tab.grid(row=1, column=0, columnspan=2)
 
 users_tab = Frame(admin_tab, width=900, height=600, bg="white")
 #users_tab["padding"] = 10
@@ -261,18 +260,33 @@ def product_info_button():
         prod_list.insert(END, f"{product[1]}   NGN {product[3]}")
         #show_product_info.config(text=product)
 
+########## root buttons ##########
+btn_frame =  LabelFrame(root, text="Action buttons", padx=5, bg="white", pady=5)
+btn_frame.grid(row=2, column=0)
 #display buttons
-display_user_btn = Button(root, text="show users", command=user_info_btn,
+display_user_btn = Button(btn_frame, text="show users", command=user_info_btn,
                             bg="dodgerblue2", fg="white")
-display_user_btn.grid(row=2, column=0, pady=5)
+display_user_btn.grid(row=0, column=0, padx=3)
 
-product_user_btn = Button(root, text="show product", command=product_info_button,
+product_user_btn = Button(btn_frame, text="show product", command=product_info_button,
                             bg="dodgerblue2", fg="white")
-product_user_btn.grid(row=2, column=1, pady=5)
-remove_user_btn = Button(root, text="Remove User", bg="dodgerblue2", command=del_user, fg="white")
-remove_user_btn.grid(row=2, column=2)
-remove_user_btn = Button(root, text="Remove product", command=del_product, bg="dodgerblue2", fg="white")
-remove_user_btn.grid(row=2, column=3)
+product_user_btn.grid(row=0, column=1, padx=3)
+remove_user_btn = Button(btn_frame, text="Remove User", bg="dodgerblue2", command=del_user, fg="white")
+remove_user_btn.grid(row=0, column=2, padx=3)
+remove_user_btn = Button(btn_frame, text="Remove product", command=del_product, bg="dodgerblue2", fg="white")
+remove_user_btn.grid(row=0, column=3, padx=3)
+
+sales_frame = LabelFrame(root, text="Sales", bg="white", pady=5, padx=5)
+sales_frame.grid(row=2, column=1)
+######### sales button ###########
+def sales_page():
+    root.destroy()
+    import admin_sales
+
+
+sales_btn = Button(sales_frame, text="view sales", bg="dodgerblue2", command=sales_page, fg="white" )
+sales_btn.grid(row=0, column=0)
+
 
 
 
