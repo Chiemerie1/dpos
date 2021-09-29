@@ -279,10 +279,21 @@ remove_user_btn.grid(row=0, column=3, padx=3)
 sales_frame = LabelFrame(root, text="Sales", bg="white", pady=5, padx=5)
 sales_frame.grid(row=2, column=1)
 ######### sales button ###########
-def sales_page():
-    root.destroy()
-    import admin_sales
 
+def back():
+    sales_win.withdraw()
+    root.wm_deiconify()
+
+def sales_page():
+    global sales_win
+    root.withdraw()
+    sales_win = Toplevel()
+    sales_win.title("Sales")
+    sales_win.geometry("900x600")
+    page_title = Label(sales_win, text="Sales", bg="white", padx=5, pady=5, font=(16))
+    page_title.place(relx=0.5)
+    back_btn = Button(sales_win, text="Back", bg="dodgerblue3", command=back, fg="white", padx=5)
+    back_btn.place(relx=0.005, rely=0.05)
 
 sales_btn = Button(sales_frame, text="view sales", bg="dodgerblue2", command=sales_page, fg="white" )
 sales_btn.grid(row=0, column=0)
